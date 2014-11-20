@@ -1,0 +1,23 @@
+{
+    "name": "poc/news",
+    "description": "",
+    "authors": [
+        {
+            "name": "Aris Buzachis",
+            "email": "buzachis.aris@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Poc\\News\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
