@@ -1,6 +1,7 @@
-<?php
-namespace Poc\News;
+<?php namespace Poc\News;
 
-class News extends \Illuminate\Database\Eloquent\Model {
+use \Illuminate\Database\Eloquent\Model;
+
+class News extends Model {
 	protected $fillable = array('title', 'body');
 }

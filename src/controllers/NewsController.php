@@ -1,5 +1,4 @@
-<?php
-namespace Poc\News;
+<?php namespace Poc\News;
 
 use Illuminate\Support\Facades\Response;
 
