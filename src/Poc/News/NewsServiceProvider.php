@@ -19,6 +19,8 @@ class NewsServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('poc/news');
+
+		include __DIR__ . '/../../routes.php';
 	}
 
 	/**
@@ -28,7 +30,14 @@ class NewsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app['news'] = $this->app->share(function($app) {
+			return new News;
+		});
+
+		$this->app->booting(function() {
+			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+			$loader->alias('News', 'Poc\News\Facades\News');
+		});
 	}
 
 	/**
@@ -38,7 +47,7 @@ class NewsServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('news');
 	}
 
 }
