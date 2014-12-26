@@ -27,7 +27,7 @@ class ArticleTest extends TestCase {
         $article = FactoryMuffin::create('Poc\News\Article');
 
         $expected = '/^\d{2}\/\d{2}\/\d{4}$/';
-        $matches = ( preg_match($expected, $article->postedAt()) ) ? true : false;
-        $this->assertTrue( $matches );
+        $matches = (preg_match($expected, $article->postedAt())) ? true : false;
+        $this->assertTrue($matches);
     }
 }

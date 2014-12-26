@@ -50,4 +50,23 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase {
         ));
         \Mail::pretend(true);
     }
+
+    public function mock($class)
+    {
+        $mock = \Mockery::mock($class);
+
+        self::$laravel->instance($class, $mock);
+
+        return $mock;
+    }
+
+    public function __call($method, $args)
+    {
+        if (in_array($method, ['get', 'post', 'put', 'patch', 'delete']))
+        {
+            return $this->call($method, $args[0]);
+        }
+
+        throw new BadMethodCallException;
+    }
 }

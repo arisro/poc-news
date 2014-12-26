@@ -2,9 +2,16 @@
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Routing\Controller;
 
-class NewsController extends \BaseController
+class NewsController extends Controller
 {
+	protected $article;
+
+	public function __construct(Article $article) {
+		$this->article = $article;
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -12,7 +19,7 @@ class NewsController extends \BaseController
 	 */
 	public function index()
 	{
-		return Response::json(Article::get());
+		return Response::json($this->article->all());
 	}
 
 
@@ -23,7 +30,7 @@ class NewsController extends \BaseController
 	 */
 	public function store()
 	{
-		Article::create(array(
+		$this->article->create(array(
 			'title' => Input::get('title'),
 			'body' => Input::get('body')
 		));
@@ -40,7 +47,7 @@ class NewsController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-		Article::destroy($id);
+		$this->article->destroy($id);
 		return Response::json(array('success' => true));
 	}
 }
