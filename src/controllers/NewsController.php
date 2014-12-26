@@ -1,6 +1,7 @@
 <?php namespace Poc\News;
 
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Input;
 
 class NewsController extends \BaseController
 {
@@ -11,7 +12,7 @@ class NewsController extends \BaseController
 	 */
 	public function index()
 	{
-		return Response::json(News::get());
+		return Response::json(Article::get());
 	}
 
 
@@ -22,7 +23,7 @@ class NewsController extends \BaseController
 	 */
 	public function store()
 	{
-		News::create(array(
+		Article::create(array(
 			'title' => Input::get('title'),
 			'body' => Input::get('body')
 		));
@@ -39,7 +40,7 @@ class NewsController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-		News::destroy($id);
+		Article::destroy($id);
 		return Response::json(array('success' => true));
 	}
 }

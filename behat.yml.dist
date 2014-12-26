@@ -1,0 +1,10 @@
+default:
+    autoload:
+        '': %paths.base%/tests/features/bootstrap
+    suites:
+        api:
+            paths:
+                - %paths.base%/tests/features/api
+            contexts:
+                - ApiFeatureContext:
+                    base_url: "http://www.todo3.local"

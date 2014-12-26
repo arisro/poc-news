@@ -9,16 +9,29 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
+        "laravel/framework": "4.2.*",
+
+        "guzzlehttp/guzzle": "~5.0",
+        "laravelbook/ardent": "2.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.7.2",
+
+        "phpunit/phpunit": "4.0.*",
+        "behat/behat": "3.*",
+        "league/factory-muffin": "~2.0",
+        "phpspec/phpspec": "~2.0"
     },
     "autoload": {
         "classmap": [
             "src/migrations",
             "src/controllers",
-            "src/models"
+            "src/models",
+            "tests"
         ],
         "psr-0": {
-            "Poc\\News\\": "src/"
+            "Poc\\News\\": "src/",
+            "Poc\\News\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable"
