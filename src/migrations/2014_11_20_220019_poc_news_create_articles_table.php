@@ -20,6 +20,8 @@ class PocNewsCreateArticlesTable extends Migration {
 			$table->string('body');
 
 			$table->timestamps();
+
+			$table->softDeletes();
 		});
 	}
 

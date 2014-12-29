@@ -8,11 +8,14 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
+use Behat\Testwork\Hook\Scope\AfterSuiteScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+
+use League\FactoryMuffin\Facade as FactoryMuffin;
 
 require_once 'src/Framework/Assert/Functions.php';
 
@@ -36,6 +39,10 @@ class ApiFeatureContext implements Context
             'base_url' => $base_url
         ];
         $this->client = new Client($client_params);
+
+        $this->resetDatabase();
+
+        \League\FactoryMuffin\Facade::loadFactories(__DIR__ . '/../../factories');
     }
 
     /**
@@ -58,11 +65,11 @@ class ApiFeatureContext implements Context
             switch($httpMethod) {
                 case 'POST':
                     $post = GuzzleHttp\Utils::jsonDecode($this->requestPayload, true);
-                    var_dump($post);
                     $this->response = $this->client->$method($url, array('body' => $post));
                     break;
                 case 'PUT':
-                    $this->response = $this->client->$method($resource, null, $this->requestPayload);
+                    $put = GuzzleHttp\Utils::jsonDecode($this->requestPayload, true);
+                    $this->response = $this->client->$method($url, array('body' => $put));
                     break;
                 default:
                     $this->response = $this->client->$method($url);
@@ -76,6 +83,7 @@ class ApiFeatureContext implements Context
             $this->response = $e->getResponse();
         }
     }
+
 
     /**
      * @Then /^the response code should be (\d+)$/
@@ -95,6 +103,14 @@ class ApiFeatureContext implements Context
     }
 
     /**
+     * @Given /^the response should be empty$/
+     */
+    public function theResponseShouldBeEmpty()
+    {
+        assertTrue((string) $this->response->getBody() === '');
+    }    
+
+    /**
      * @Given /^there (is|are) (\d+) rows? of "([^"]*)"$/
      */
     public function thereAreRowsOf($ign1, $arg1, $arg2)
@@ -108,6 +124,14 @@ class ApiFeatureContext implements Context
     }
 
     /**
+     * @Given /^there (is|are) (\d+) "([^"]+)"s?$/
+     */
+    public function thereAreTests($ign1, $num, $modelName)
+    {
+        FactoryMuffin::seed($num, $modelName);
+    }
+
+    /**
      * @BeforeScenario
      */
     public function prepareDatabase(BeforeScenarioScope $scope)
@@ -118,7 +142,7 @@ class ApiFeatureContext implements Context
     /**
      * @AfterScenario
      */
-    public function resetDatabase(AfterScenarioScope $scope)
+    public function resetDatabase(AfterScenarioScope $scope = null)
     {
         self::$laravel['artisan']->call('migrate:reset');
     }
@@ -136,8 +160,6 @@ class ApiFeatureContext implements Context
 
         self::runDatabaseMigrations();
     }
-
-     
 
     public static function runDatabaseMigrations() {
         // migrate the main app

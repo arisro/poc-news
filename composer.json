@@ -11,8 +11,7 @@
         "php": ">=5.4.0",
         "laravel/framework": "4.2.*",
 
-        "guzzlehttp/guzzle": "~5.0",
-        "laravelbook/ardent": "2.*"
+        "guzzlehttp/guzzle": "~5.0"
     },
     "require-dev": {
         "mockery/mockery": "0.7.2",
@@ -27,6 +26,10 @@
             "src/migrations",
             "src/controllers",
             "src/models",
+            "src/repositories",
+            "src/repositories/interfaces",
+            "src/services",
+            "src/services/validation",
             "tests"
         ],
         "psr-0": {

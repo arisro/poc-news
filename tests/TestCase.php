@@ -9,6 +9,9 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase {
         parent::setUp();
 
         $this->prepareForTests();
+
+        \Session::start();
+        \Route::enableFilters();
     }
 
     public static function setupBeforeClass()
@@ -44,10 +47,6 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase {
      */
     private function prepareForTests()
     {
-        \Artisan::call('migrate');
-        \Artisan::call('migrate', array(
-            '--path' => './workbench/poc/news/src/migrations',
-        ));
         \Mail::pretend(true);
     }
 
@@ -64,7 +63,7 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase {
     {
         if (in_array($method, ['get', 'post', 'put', 'patch', 'delete']))
         {
-            return $this->call($method, $args[0]);
+            return $this->call($method, $args[0], isset($args[1]) ? $args[1] : array());
         }
 
         throw new BadMethodCallException;

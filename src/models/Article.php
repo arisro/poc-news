@@ -1,13 +1,15 @@
 <?php namespace Poc\News;
 
-use \LaravelBook\Ardent\Ardent;
+use \Illuminate\Database\Eloquent\Model as Eloquent;
+use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class Article extends Ardent {
+class Article extends Eloquent {
+
+    use SoftDeletingTrait;
+
+    protected $dates = ['deleted_at'];
+
 	protected $fillable = array('title', 'body');
-
-	public static $rules = array(
-		'title' => 'required'
-	);
 
 	public function postedAt()
     {
