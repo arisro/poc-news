@@ -1,0 +1,13 @@
+<div class="newsShowContainer col-md-8 col-md-offset-2" ng-controller="newsShowController">
+	<p><a href="/news">&lt; Back to news list</a></p>
+
+	<div class="page-header">
+		<h4>{{ news.title }}</h4>
+	</div>
+
+	<p class="text-center" ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
+
+	<div class="news" ng-hide="loading">
+		<p>{{ news.body }}</p>
+	</div>
+</div>

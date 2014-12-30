@@ -1,1 +1,12 @@
-HEY THIS IS NEWS {{ message }}
+<div class="newsContainer col-md-8 col-md-offset-2" ng-controller="newsListController">
+	<div class="page-header">
+		<h4>{{ 'poc_news_list_heading' | translate }}</h4>
+	</div>
+
+	<p class="text-center" ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
+
+	<div class="news" ng-hide="loading" ng-repeat="n in news">
+		<h3><a href="/news/{{ n.id }}">{{ n.title }}</a></h3>
+		<p>{{ n.body }}</p>
+	</div>
+</div>
